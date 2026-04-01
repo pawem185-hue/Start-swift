@@ -1,1 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StartSwift Prototype</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="dots" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="page-pill"><span id="pageLabel">Page 1</span></div>
+    </header>
 
+    <main id="app" class="screen"></main>
+  </div>
+
+  <template id="landing-template">
+    <section class="split landing-grid">
+      <div class="panel light intro-panel">
+        <div>
+          <h1 class="hero-title">Start<br>Swift</h1>
+          <p class="hero-copy">
+            Start your business faster, smarter, and with total clarity.
+            StartSwift guides you step-by-step through everything from registration to launch.
+          </p>
+        </div>
+      </div>
+
+      <div class="action-column">
+        <div class="prompt-chip">Select one:</div>
+        <button class="choice-btn" data-action="select-readiness" data-value="launching">
+          I already have a business plan, I just need help launching my company
+        </button>
+        <button class="choice-btn" data-action="select-readiness" data-value="solidifying">
+          I roughly have a business plan, and need a bit of help solidifying it and launching it
+        </button>
+        <button class="choice-btn" data-action="select-readiness" data-value="idea">
+          I have no idea what I want to do, I just know I want a business
+        </button>
+      </div>
+    </section>
+  </template>
+
+  <template id="business-type-template">
+    <section class="split question-grid">
+      <div class="question-left">
+        <h2 class="screen-title">What type<br>of business<br>are you<br>starting?</h2>
+      </div>
+      <div class="action-column">
+        <button class="choice-btn" data-action="select-type" data-value="Brick-and-mortar">Brick-and-mortar</button>
+        <button class="choice-btn" data-action="select-type" data-value="Online / e-commerce">Online / e-commerce</button>
+        <button class="choice-btn" data-action="select-type" data-value="Service-based">Service-based</button>
+        <button class="choice-btn" data-action="select-type" data-value="Hybrid">Hybrid</button>
+      </div>
+    </section>
+  </template>
+
+  <template id="industry-template">
+    <section class="center-stage">
+      <h2 class="screen-title center"><span id="typeHeadline"></span>.<br>Awesome!</h2>
+      <div class="form-card small">
+        <label for="industryInput">Type in your business industry:</label>
+        <input id="industryInput" type="text" placeholder="Restaurant, clothing store, hardware store, coaching, skincare, etc." />
+        <button class="primary-btn" data-action="save-industry">Continue</button>
+      </div>
+    </section>
+  </template>
+
+  <template id="structure-template">
+    <section class="split structure-grid">
+      <div class="left-stack">
+        <h2 class="screen-title"><span id="industryHeadline"></span>.<br>Great!</h2>
+        <div class="panel light info-card">
+          <h3>Step one: Let’s choose a business structure</h3>
+          <p>
+            This is how your business is legally set up. For many first-time founders,
+            an LLC is the most flexible starting point.
+          </p>
+        </div>
+        <p class="help-link-row">
+          Don’t know what to pick? <button class="text-link" data-action="open-structure-help">Click here to learn more</button>
+        </p>
+      </div>
+      <div class="action-column">
+        <button class="choice-btn" data-action="select-structure" data-value="Sole Proprietorship">Sole Proprietorship</button>
+        <button class="choice-btn emphasized" data-action="select-structure" data-value="LLC">LLC</button>
+        <button class="choice-btn" data-action="select-structure" data-value="Partnership">Partnership</button>
+        <button class="choice-btn" data-action="select-structure" data-value="S Corp">S Corp</button>
+        <button class="choice-btn" data-action="select-structure" data-value="C Corp">C Corp</button>
+        <button class="choice-btn secondary" data-action="already-registered">Already registered your business? Click here</button>
+      </div>
+    </section>
+  </template>
+
+  <template id="register-template">
+    <section class="center-stage">
+      <h2 class="screen-title center">Let’s register your <span id="structureName"></span>!</h2>
+      <div class="two-card-row">
+        <div class="panel light info-card tall">
+          <h3>What happens next:</h3>
+          <ul id="registrationChecklist"></ul>
+        </div>
+        <div class="panel light cta-card">
+          <h3>Open the official filing page</h3>
+          <p>You’ll be redirected to the appropriate official site for this step.</p>
+          <a id="officialRegistrationLink" class="big-link" href="#" target="_blank" rel="noopener noreferrer">Go to the official website</a>
+        </div>
+      </div>
+      <div class="footer-actions right">
+        <button class="primary-btn" data-action="next-after-registration">Done? Move on</button>
+      </div>
+    </section>
+  </template>
+
+  <template id="ein-template">
+    <section class="center-stage">
+      <h2 class="screen-title center">Get your EIN (Tax ID)</h2>
+      <div class="banner">Give your business an identity so it can pay taxes and open accounts.</div>
+      <div class="two-card-row align-top">
+        <div class="panel light info-card tall">
+          <h3>Step 1: Apply for your EIN</h3>
+          <p>The IRS issues EINs online for free.</p>
+          <a class="big-link compact" href="https://www.irs.gov/businesses/small-businesses-self-employed/get-an-employer-identification-number" target="_blank" rel="noopener noreferrer">Open the IRS EIN page</a>
+        </div>
+        <div class="panel light info-card tall">
+          <h3>Step 2: Open a business bank account</h3>
+          <div class="checklist" id="bankChecklist">
+            <label><input type="checkbox"> Bring your formation documents</label>
+            <label><input type="checkbox"> Bring your EIN confirmation</label>
+            <label><input type="checkbox"> Compare business checking options</label>
+            <label><input type="checkbox"> Set up online banking and payments</label>
+          </div>
+        </div>
+      </div>
+      <div class="footer-actions right">
+        <button class="primary-btn" data-action="next-after-ein">Done? Move on</button>
+      </div>
+    </section>
+  </template>
+
+  <template id="launch-template">
+    <section class="center-stage">
+      <h2 class="screen-title center">You’re ready for launch</h2>
+      <div class="summary-grid">
+        <div class="panel light info-card tall">
+          <h3>Your setup summary</h3>
+          <ul class="summary-list">
+            <li><strong>Starting point:</strong> <span id="summaryReadiness"></span></li>
+            <li><strong>Business type:</strong> <span id="summaryType"></span></li>
+            <li><strong>Industry:</strong> <span id="summaryIndustry"></span></li>
+            <li><strong>Structure:</strong> <span id="summaryStructure"></span></li>
+          </ul>
+        </div>
+        <div class="panel light info-card tall">
+          <h3>Suggested next steps</h3>
+          <ul id="nextStepsList"></ul>
+        </div>
+      </div>
+      <div class="footer-actions spread">
+        <button class="ghost-btn" data-action="restart">Start over</button>
+        <button class="primary-btn" data-action="download-summary">Download summary</button>
+      </div>
+    </section>
+  </template>
+
+  <template id="modal-template">
+    <div class="modal-backdrop" id="modalBackdrop">
+      <div class="modal-card">
+        <button class="modal-close" data-action="close-modal">×</button>
+        <h3>How to think about business structures</h3>
+        <ul>
+          <li><strong>Sole Proprietorship:</strong> easiest to start, but no liability separation.</li>
+          <li><strong>LLC:</strong> flexible, common for small businesses, adds liability protection.</li>
+          <li><strong>Partnership:</strong> for multiple owners sharing responsibility.</li>
+          <li><strong>S Corp:</strong> tax election that may help some businesses after they grow.</li>
+          <li><strong>C Corp:</strong> better suited for companies planning to raise major outside investment.</li>
+        </ul>
+      </div>
+    </div>
+  </template>
+
+  <script src="script.js"></script>
+</body>
+</html>
